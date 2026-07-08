@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: climAlert
+    temperaturaAlerta: 35
+    humedadAlerta: 60
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ldomio@gmail.com
+    password: tu-contraseña-de-aplicacion
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+weather:
+  api:
+    base-url: "https://api.weatherapi.com/v1/?key=9a20e77dd11c42798fc20307260807"
+    city: "Buenos Aires"
