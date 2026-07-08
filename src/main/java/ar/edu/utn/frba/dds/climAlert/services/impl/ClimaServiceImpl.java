@@ -50,7 +50,7 @@ public class ClimaServiceImpl implements ClimaService {
             String cuerpo = """
                     Alerta climatológica
                     Temperatura: %s°C
-                    Humedad: %s%
+                    Humedad: %s%%
                     Fecha: %s
                     """.formatted(clima.getTemperature(), clima.getHumidity(), clima.getDate());
 

@@ -17,5 +17,6 @@ spring:
 
 weather:
   api:
-    base-url: "https://api.weatherapi.com/v1/?key=9a20e77dd11c42798fc20307260807"
+    base-url: "https://api.weatherapi.com/v1"
+    api-key: "9a20e77dd11c42798fc20307260807"
     city: "Buenos Aires"

@@ -25,7 +25,7 @@ class WeatherApiRestClientTest {
 
         when(restTemplate.getForObject(anyString(), eq(ClimaDto.class), anyString(), anyString())).thenReturn(expectedDto);
 
-        var client = new WeatherApiRestClient(restTemplate, "Buenos Aires", "https://api.weatherapi.com/v1");
+        var client = new WeatherApiRestClient(restTemplate, "Buenos Aires", "https://api.weatherapi.com/v1", "test-key");
         ClimaDto result = client.fetchWeather();
 
         assertNotNull(result);
