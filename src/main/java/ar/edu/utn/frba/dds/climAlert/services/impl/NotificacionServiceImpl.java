@@ -6,11 +6,15 @@ import ar.edu.utn.frba.dds.climAlert.services.EmailServiceAdapter;
 import ar.edu.utn.frba.dds.climAlert.services.NotificacionService;
 import org.springframework.stereotype.Service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class NotificacionServiceImpl implements NotificacionService {
+    private static final Logger log = LoggerFactory.getLogger(NotificacionServiceImpl.class);
+
     private final NotificacionRepository notificacionRepository;
     private final EmailServiceAdapter emailServiceAdapter;
 
@@ -46,7 +50,9 @@ public class NotificacionServiceImpl implements NotificacionService {
 
     @Override
     public List<Notificacion> obtenerNotificacionesAEnviar() {
-        return notificacionRepository.findPendientes();
+        List<Notificacion> pendientes = notificacionRepository.findPendientes();
+        log.info("Notificaciones pendientes por enviar: {}", pendientes.size());
+        return pendientes;
     }
 
     @Override
@@ -55,6 +61,7 @@ public class NotificacionServiceImpl implements NotificacionService {
         notificaciones.forEach(n -> {
             emailServiceAdapter.enviarMail(n.getEmailDestinatario(), "Alerta climatológica", n.getMensaje());
             n.setEnviada(true);
+            log.info("Alerta enviada a {}: \"{}\"", n.getEmailDestinatario(), n.getMensaje());
             notificacionRepository.save(n);
         });
     }

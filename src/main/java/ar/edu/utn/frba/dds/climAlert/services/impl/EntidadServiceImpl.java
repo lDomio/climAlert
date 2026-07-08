@@ -18,7 +18,9 @@ public class EntidadServiceImpl implements EntidadService {
 
     @Override
     public Entidad crearEntidad(String email) {
-        return entidadRepository.save(new Entidad(email));
+        Entidad nuevaEntidad = new Entidad(email);
+        nuevaEntidad.setEstaHabilitado(true);
+        return entidadRepository.save(nuevaEntidad);
     }
 
     @Override

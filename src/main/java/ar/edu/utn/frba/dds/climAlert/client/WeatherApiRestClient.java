@@ -1,11 +1,11 @@
 package ar.edu.utn.frba.dds.climAlert.client;
 
 import ar.edu.utn.frba.dds.climAlert.dto.ClimaDto;
-import org.springframework.beans.factory.annotation.Qualifier;
+import ar.edu.utn.frba.dds.climAlert.dto.WeatherApiResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import java.time.Instant;
 
 @Component
 public class WeatherApiRestClient implements WeatherApiClient {
@@ -23,6 +23,19 @@ public class WeatherApiRestClient implements WeatherApiClient {
 
     @Override
     public ClimaDto fetchWeather() {
-        return restTemplate.getForObject(baseUrl + "/current.json?key={key}&q={city}", ClimaDto.class, apiKey, city);
+        var response = restTemplate.getForObject(
+            baseUrl + "/current.json?key={key}&q={city}",
+            WeatherApiResponse.class, apiKey, city
+        );
+        if (response == null || response.current() == null) {
+            throw new RuntimeException("WeatherAPI response is empty");
+        }
+        var current = response.current();
+        return new ClimaDto(
+            current.tempC(),
+            current.humidity(),
+            current.condition().text(),
+            Instant.ofEpochSecond(current.lastUpdatedEpoch())
+        );
     }
 }

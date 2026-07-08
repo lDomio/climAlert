@@ -1,16 +1,14 @@
 package ar.edu.utn.frba.dds.climAlert.client;
 
 import ar.edu.utn.frba.dds.climAlert.dto.ClimaDto;
+import ar.edu.utn.frba.dds.climAlert.dto.WeatherApiResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.Instant;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -21,9 +19,11 @@ class WeatherApiRestClientTest {
     void shouldReturnClimaDtoWhenFetchingWeather() {
         var restTemplate = mock(RestTemplate.class);
 
-        var expectedDto = new ClimaDto(25.5, 60, "clear sky", Instant.now());
+        var expectedResponse = new WeatherApiResponse(
+            new WeatherApiResponse.CurrentWeather(25.5, 60, new WeatherApiResponse.WeatherCondition("clear sky"), 1700000000L)
+        );
 
-        when(restTemplate.getForObject(anyString(), eq(ClimaDto.class), anyString(), anyString())).thenReturn(expectedDto);
+        when(restTemplate.getForObject(anyString(), eq(WeatherApiResponse.class), anyString(), anyString())).thenReturn(expectedResponse);
 
         var client = new WeatherApiRestClient(restTemplate, "Buenos Aires", "https://api.weatherapi.com/v1", "test-key");
         ClimaDto result = client.fetchWeather();

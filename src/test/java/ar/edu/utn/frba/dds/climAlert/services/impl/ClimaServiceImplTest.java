@@ -6,6 +6,7 @@ import ar.edu.utn.frba.dds.climAlert.domain.Clima;
 import ar.edu.utn.frba.dds.climAlert.domain.Notificacion;
 import ar.edu.utn.frba.dds.climAlert.dto.ClimaDto;
 import ar.edu.utn.frba.dds.climAlert.repositories.ClimaRepository;
+import ar.edu.utn.frba.dds.climAlert.services.EntidadService;
 import ar.edu.utn.frba.dds.climAlert.services.NotificacionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,7 @@ class ClimaServiceImplTest {
     @Mock AlertaServiceImpl alertaService;
     @Mock WeatherApiClient weatherApiClient;
     @Mock NotificacionService notificacionService;
+    @Mock EntidadService entidadService;
 
     private ClimaServiceImpl sut;
 
@@ -35,7 +37,7 @@ class ClimaServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        sut = new ClimaServiceImpl(climaRepository, alertaService, weatherApiClient, notificacionService);
+        sut = new ClimaServiceImpl(climaRepository, alertaService, weatherApiClient, notificacionService, entidadService);
     }
 
     @Test
