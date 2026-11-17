@@ -1,13 +1,13 @@
 spring:
   application:
     name: climAlert
-    temperaturaAlerta: 35
-    humedadAlerta: 60
+    temperaturaAlerta: ${CLIM_ALERT_TEMPERATURE:35}
+    humedadAlerta: ${CLIM_ALERT_HUMIDITY:60}
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: ldomio@gmail.com
-    password: tu-contraseña-de-aplicacion
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
     properties:
       mail:
         smtp:
@@ -17,6 +17,6 @@ spring:
 
 weather:
   api:
-    base-url: "https://api.weatherapi.com/v1"
-    api-key: "9a20e77dd11c42798fc20307260807"
-    city: "Buenos Aires"
+    base-url: ${WEATHER_API_BASE_URL:https://api.weatherapi.com/v1}
+    api-key: ${WEATHER_API_KEY:}
+    city: ${WEATHER_CITY:Buenos Aires}
